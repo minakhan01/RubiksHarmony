@@ -1932,6 +1932,8 @@ if (module && module.exports) {
                 return;
             }
             var cubes = [];
+            beat();
+            position = (position + 1) %twinkle_beat.length;
             this.selectedCubes.forEach(function(el) {
                 var value = el.coordinates[this.axisConstant];
             for (var r = 0; r < 3; r++) {
@@ -2173,9 +2175,9 @@ if (module && module.exports) {
             var F = this.centerCubes.front;
             var B = this.centerCubes.back;
             var C = this.centerCubes.core;
-            beat();
-            position = (position + 1) %12;
-            is_major = !is_major;
+            // beat();
+            // position = (position + 1) %12;
+            // is_major = !is_major;
             var layers = {
                 "L": {cubies:[L], axis:Z_AXIS, rotation:rot.Z, ccw:true},
                 "R": {cubies:[R], axis:Z_AXIS, rotation:rot.Z, ccw:false},
@@ -2221,7 +2223,7 @@ if (module && module.exports) {
 
         this.perform = function(alg) {
             var that = this;
-            var delay = 100;
+            var delay = 400;
             if (!isRotating && alg.length > 0) {
                 var clone = alg.slice(0);
                 var move = clone.shift();
@@ -3055,7 +3057,10 @@ position = 0;
 major_array = [ "[CEG]4", "[_DF_A]4", "[D_GA]4", "[_EG_B]4", "[E_AB]4", "[FAC]4", "[_G_B_D]4", "[GBD]4", "[_AC_E]4", 
 "[A_DE]4", "[_BDF]4", "[B_E_G]4"];
 minor_array = ["[C_AF]4", "[_DA_G]4", "[D_BG]4", "[_EB_A]4", "[ECA]4", "[F_D_B]4", "[_GDB]4", "[G_EC]4", "[_AE_D]4", "[AFD]4", "[_B_G_E]4", "[BGE]4"];
-
+twinkle = ["CCGG", "AAG2", "FFEE", "DDC2", "GGFF", "EED2", "GGFF", "EED2", "CCGG", "AAG2", "FFEE", "DDC2"];
+twinkle_beat1 = ["[C]4", "[C]4", "[G]4", "[G]4", "[A]4", "[A]4", "[G2]4", "[G]4", "[F]4", "[F]4", "[E]4", "[E]4"];
+twinkle_beat2 = ["C", "C", "G", "G", "A", "A", "G2", "F", "F", "E", "E", "D", "D", "C2:", ":G", "G", "F", "F", "E", "E", "D2", "G", "G", "F", "F", "E", "E", "D2", "C", "C", "G", "G", "A", "A", "G2", "F", "F", "E", "E", "D", "D", "C2:"];
+twinkle_beat = ["[C]4", "[C]4", "[G]4", "[G]4", "[A]4", "[A]4", "[G2]4", "[F]4", "[F]4", "[E]4", "[E]4", "[D]4", "[D]4", "[C2:]4", "[:G]4", "[G]4", "[F]4", "[F]4", "[E]4", "[E]4", "[D2]4", "[G]4", "[G]4", "[F]4", "[F]4", "[E]4", "[E]4", "[D2]4", "[C]4", "[C]4", "[G]4", "[G]4", "[A]4", "[A]4", "[G2]4", "[F]4", "[F]4", "[E]4", "[E]4", "[D]4", "[D]4", "[C2:]4"];
 var inst = new Instrument('piano');
 // inst.silence();
 // Play a single tone immediately.  Tones may be also specified
@@ -3063,11 +3068,10 @@ var inst = new Instrument('piano');
 inst.tone('C');
 
 function beat() {
-  // Play "Mary Had a Little Lamb"
   if (is_major){
-  inst.play(major_array[position]);
+  inst.play(twinkle_beat[position]);
   }
   else{
-    inst.play(minor_array[position]);
+    inst.play(twinkle_beat[position]);
   }
 }
